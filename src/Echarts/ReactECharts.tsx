@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import type { CSSProperties } from 'react';
+import { Theme, presetGpnDefault } from '@consta/uikit/Theme';
+import { Text } from '@consta/uikit/Text';
+import { Layout } from '@consta/uikit/Layout';
 
 import { forceResizeCharts } from './UtilsForCharts';
 
@@ -66,19 +69,12 @@ export function ReactECharts({
     // Update chart
     if (chartRef.current !== null) {
       const chart = echarts.getInstanceByDom(chartRef.current);
-      // chart?.setOption(option, settings);
       chart?.setOption(
         {
           ...option,
           tooltip: {
             show: true,
             trigger: 'axis',
-            // formatter: (params) => {
-            //   const dataIndex = params[0]?.dataIndex;
-            //   const value = option.series[0].data[dataIndex];
-            //   return '${value}';
-            // },
-            // formatter: '{a} года <br/> {b} <br/> {c}',
             formatter: (params: any) => {
               const dataIndex = params[0]?.dataIndex;
               const value = option.series[0].data[dataIndex].value;
@@ -86,21 +82,18 @@ export function ReactECharts({
               const month = option.xAxis.data[dataIndex];
               const color = 'orange';
               return `
-              <div style="background-color: #fff; border: 1px solid #ccc; padding: 10px;">
-              <div>${month} года</div>
-              <div> 
-                <span style="width: 10px;
+              <Theme preset={presetGpnDefault}>
+              <Text>${month} год</Text>
+              <br/>
+              <span style="width: 10px;
                 height: 10px;
-                color: ${color};
                 background-color: orange;
                 border-radius: 50%;
                 display: inline-block"> 
-                </span>  ${indicator}  ${value}
-                </div>
-
-                
-                
-              </div>
+                </span> 
+                <Text view="secondary"> ${indicator}</Text>
+                <Text> ${value} ₽</Text>
+              </Theme>
             `;
             },
             borderWidth: '195px',
@@ -121,6 +114,7 @@ export function ReactECharts({
             {
               ...option.yAxis[0],
               scale: true,
+              splitNumber: 4,
             },
           ],
         },
