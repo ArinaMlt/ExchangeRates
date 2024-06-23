@@ -50,7 +50,6 @@
 
 
 
-С нетерпеним жду возможности присоединиться к вашей команде!
 <p align="left">
  <img width="250" src="./assets/coter.jpg" alt="jpg"/>
 </p>
